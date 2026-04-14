@@ -1,0 +1,73 @@
+[project]
+name = "tcc-energy-forecast"
+version = "0.1.0"
+description = "TCC — Comparação de Algoritmos de Previsão de Séries Temporais para Demanda de Energia Elétrica"
+requires-python = ">=3.11"
+
+dependencies = [
+    # Forecasting — Nixtla ecosystem
+    "statsforecast>=1.7",
+    "mlforecast>=0.13",
+    "neuralforecast>=1.7",
+    "nixtla>=0.5",           # TimeGPT SDK
+
+    # Deep learning backbone (usado pelo neuralforecast e darts)
+    "torch>=2.2",
+
+    # Darts — TFT e LSTM alternativos
+    "darts>=0.30",
+
+    # Federated learning
+    "flwr>=1.8",             # Flower (Fed-LSTM experiment)
+
+    # Data
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "pyarrow>=15",           # leitura de parquet
+
+    # Experiment tracking
+    "mlflow>=2.12",
+
+    # Utilitários
+    "holidays>=0.45",        # feriados EUA para feature engineering
+    "requests>=2.31",        # OpenMeteo API
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel>=6.29",
+    "jupyter>=1.0",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "ruff>=0.4",
+    "pyright>=1.1",
+]
+
+[tool.uv]
+# Instalar dependências de desenvolvimento por padrão no ambiente local
+dev-dependencies = [
+    "ipykernel>=6.29",
+    "jupyter>=1.0",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "ruff>=0.4",
+    "pyright>=1.1",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "ANN"]
+ignore = ["ANN101", "ANN102"]
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+reportMissingImports = true
+
+#[build-system]
+#requires = ["hatchling"]
+#build-backend = "hatchling.build"

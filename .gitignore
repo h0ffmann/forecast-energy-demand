@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environment (uv)
+.venv/
+venv/
+
+# Data — downloaded and processed files
+data/
+*.csv
+*.parquet
+*.json
+!pyproject.toml   # keep pyproject but ignore other json
+
+# Results and MLflow artifacts
+results/
+mlruns/
+mlartifacts/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Kaggle credentials (never commit)
+kaggle.json
+
+# Others
+mlflow.db
