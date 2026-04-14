@@ -86,6 +86,18 @@ typecheck:
 check: lint typecheck
 
 # ---------------------------------------------------------------------------
+# AI context
+# ---------------------------------------------------------------------------
+
+# Pack repo into a single file for AI context
+repomix:
+    uv run repomix --ignore "data/,mlruns/,mlartifacts/,results/,.venv/,**/__pycache__"
+
+# Pack and copy to clipboard (xclip on Linux, pbcopy on Mac)
+repomix-clip:
+    uv run repomix --ignore "data/,mlruns/,mlartifacts/,results/,.venv/,**/__pycache__" && cat repomix-output.xml | xclip -selection clipboard 2>/dev/null || cat repomix-output.xml | pbcopy 2>/dev/null || echo "Copy repomix-output.xml manually"
+
+# ---------------------------------------------------------------------------
 # Cleanup
 # ---------------------------------------------------------------------------
 

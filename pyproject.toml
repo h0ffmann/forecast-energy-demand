@@ -53,6 +53,7 @@ dev-dependencies = [
     "seaborn>=0.13",
     "ruff>=0.4",
     "pyright>=1.1",
+    "repomix>=0.2",
 ]
 
 [tool.ruff]
