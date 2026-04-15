@@ -115,3 +115,15 @@ clean-venv:
 
 # Remove everything generated (data + results + venv)
 clean: clean-results clean-data clean-venv
+
+# ---------------------------------------------------------------------------
+# LaTeX
+# ---------------------------------------------------------------------------
+
+# Install all packages (7GB)
+latex-install:
+    sudo apt install texlive-full
+
+# Generate project PDF report from LaTeX source
+latex-build:
+    cd docs/project && pdflatex project_main.tex

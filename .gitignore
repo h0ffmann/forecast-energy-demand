@@ -42,3 +42,10 @@ kaggle.json
 # Others
 mlflow.db
 repomix-output.md
+docs/project/fig/*.pdf
+docs/project/*.pdf
+docs/project/*.toc
+docs/project/*.lof
+docs/project/*.lot
+docs/project/*.log
+docs/project/*.aux

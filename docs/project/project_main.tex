@@ -1,0 +1,88 @@
+\documentclass[a4paper,12pt,oneside,openany]{book}
+\input{thesis_pack}
+\usepackage{float}
+\usepackage{graphicx}
+\begin{document}
+
+\frontmatter
+\thispagestyle{empty}
+
+\input{cover}
+
+\pagebreak
+
+%%\input{Preambulo}
+
+% Table of Contents
+% ---------------------------------------------------------------
+     \tableofcontents
+% ---------------------------------------------------------------
+% Lista de figuras
+% ---------------------------------------------------------------
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de Figuras}
+\listoffigures
+% ---------------------------------------------------------------
+% Lista de Tabelas
+% ---------------------------------------------------------------
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de Tabelas}
+\listoftables
+
+\mainmatter
+\cleardoublepage
+% ---------------------------------------------------------------
+% Chapter 1 - Introdução
+% ---------------------------------------------------------------
+%%\chapter{Introdução}
+%%\label{cap1}
+%%\input{cap1}
+
+% ---------------------------------------------------------------
+% Chapter 2 - Fundamentação Teórica
+% ---------------------------------------------------------------
+\chapter{Fundamentação Teórica}
+\label{ch:cap2}
+%%\input{cap2}
+
+% ---------------------------------------------------------------
+% Chapter 3 - Trabalhos Relacionados
+% ---------------------------------------------------------------
+\chapter{Trabalhos Relacionados}
+\label{ch:cap3}
+%%\input{cap3}
+
+% ---------------------------------------------------------------
+% Chapter 4 - Desenvolvimento da Aplicação
+% ---------------------------------------------------------------
+\chapter{Desenvolvimento da Aplicação}
+\label{ch:cap4}
+%%\input{cap4}
+
+% ---------------------------------------------------------------
+% Chapter 5 - Resultados experimentais
+% ---------------------------------------------------------------
+\chapter{Resultados Experimentais}
+\label{ch:cap5}
+%%\input{cap5}
+
+% ---------------------------------------------------------------
+% Chapter 6 - Conclusões e Trabalhos Futuros
+% ---------------------------------------------------------------
+\chapter{Conclusões}
+\label{ch:cap6}
+%%\input{cap6}
+
+% ---------------------------------------------------------------
+% Bibliografia
+% ---------------------------------------------------------------
+\normalsize
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliographystyle{coppe}
+\bibliography{refs.bib}
+
+
+\backmatter
+
+\end{document}
