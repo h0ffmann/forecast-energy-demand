@@ -36,13 +36,11 @@ CACHE_FILE= REPO_ROOT / "docs" / "project" / ".translation-cache.json"
 # ---------------------------------------------------------------------------
 
 # GitHub Models endpoint — uses the GITHUB_TOKEN that's already in Actions.
-# No extra secrets needed. Rate limits: 15 req/min, 16k tokens/min, 170k/day.
-GITHUB_MODELS_BASE_URL = "https://models.inference.ai.azure.com"
+GITHUB_MODELS_BASE_URL = "https://models.github.ai/inference"
 
 # Best free model available on GitHub Models for academic translation.
 # Alternatives: "mistral-large-2407", "gpt-4o-mini" (also available on free tier)
-MODEL = "meta-llama-3.1-70b-instruct"
-
+MODEL = "meta/llama-3.3-70b-instruct"
 # ---------------------------------------------------------------------------
 # System prompt
 # ---------------------------------------------------------------------------
