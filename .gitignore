@@ -43,7 +43,7 @@ kaggle.json
 mlflow.db
 repomix-output.md
 docs/project/shared/fig/*.pdf
-**.pdf
+**main.pdf
 **.toc
 **.lof
 **.lot
