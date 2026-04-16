@@ -1,0 +1,116 @@
+name: Build Thesis PDFs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/project/pt/**'
+      - 'docs/project/shared/**'
+      - 'scripts/translate_latex.py'
+      - '.github/workflows/thesis-pdf.yml'
+  pull_request:
+    paths:
+      - 'docs/project/pt/**'
+  workflow_dispatch:          # manual trigger from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write         # to commit PDFs + cache back to main
+      models: read            # GitHub Models API (Llama / GPT-4o-mini etc.)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # full history so we can git push at the end
+
+      # ---------------------------------------------------------------
+      # Tectonic — downloads only the packages your doc actually uses
+      # Cache persists across runs; first run is ~200 MB, later runs ~0
+      # ---------------------------------------------------------------
+      - name: Cache Tectonic packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Tectonic
+          key: tectonic-${{ runner.os }}-${{ hashFiles('docs/project/pt/project_main.tex', 'docs/project/shared/thesis_pack.tex') }}
+          restore-keys: |
+            tectonic-${{ runner.os }}-
+
+      - name: Install Tectonic
+        uses: wtfjoke/setup-tectonic@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ---------------------------------------------------------------
+      # Python — only the openai SDK is needed
+      # ---------------------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install openai SDK
+        run: pip install openai
+
+      # ---------------------------------------------------------------
+      # Translation cache — restore JSON from previous runs so the LLM
+      # only sees files that actually changed
+      # ---------------------------------------------------------------
+      - name: Restore translation cache
+        uses: actions/cache@v4
+        with:
+          path: docs/project/.translation-cache.json
+          key: translation-${{ github.sha }}
+          restore-keys: |
+            translation-
+
+      # ---------------------------------------------------------------
+      # Translate PT-BR → EN-US
+      # GITHUB_TOKEN is automatic — no extra secret needed
+      # ---------------------------------------------------------------
+      - name: Translate PT-BR → EN-US
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/translate_latex.py
+
+      # ---------------------------------------------------------------
+      # Build PT-BR PDF
+      # ---------------------------------------------------------------
+      - name: Build PT-BR PDF
+        run: tectonic docs/project/pt/project_main.tex
+
+      # ---------------------------------------------------------------
+      # Build EN-US PDF
+      # ---------------------------------------------------------------
+      - name: Build EN-US PDF
+        run: tectonic docs/project/en/project_main.tex
+
+      # ---------------------------------------------------------------
+      # Upload both as downloadable workflow artifacts (30 day retention)
+      # ---------------------------------------------------------------
+      - name: Upload PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: thesis-pdfs-${{ github.sha }}
+          retention-days: 30
+          path: |
+            docs/project/pt/project_main.pdf
+            docs/project/en/project_main.pdf
+
+      # ---------------------------------------------------------------
+      # On main branch push: commit PDFs + cache back to repo
+      # [skip ci] prevents a recursive trigger
+      # ---------------------------------------------------------------
+      - name: Commit PDFs and cache
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/project/pt/project_main.pdf
+          git add docs/project/en/project_main.pdf
+          git add docs/project/.translation-cache.json
+          git diff --staged --quiet || git commit -m "ci: rebuild PDFs [skip ci]"
+          git push
