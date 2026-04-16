@@ -39,7 +39,7 @@ jobs:
             tectonic-${{ runner.os }}-
 
       - name: Install Tectonic
-        uses: wtfjoke/setup-tectonic@v3
+        uses: wtfjoke/setup-tectonic@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
