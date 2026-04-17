@@ -22,19 +22,26 @@ install-dev:
 # Data
 # ---------------------------------------------------------------------------
 
-# Download all PJM regions (GitHub mirror, no auth)
+# Download default regions (9 Kaggle-compatible zones, 2022 → today)
 download:
-    uv run download_pjm.py --strategy direct
+    uv run download_pjm.py
 
-# Download specific regions only
-download-regions regions="COMED DAYTON PJME EKPC FE NI":
-    uv run download_pjm.py --strategy direct --regions {{regions}}
+download-sample:
+    uv run download_pjm.py --regions COMED --start 2024-01-01 --end 2024-01-07 -v
 
-# Download via Kaggle API (requires KAGGLE_USERNAME + KAGGLE_KEY env vars)
-download-kaggle:
-    uv run download_pjm.py --strategy kaggle
+# Download specific regions only (friendly names or raw zone codes)
+download-regions regions="COMED DAYTON EKPC FE":
+    uv run download_pjm.py --regions {{regions}}
 
-# List available PJM regions
+# Download a custom date window
+download-range start end regions="":
+    uv run download_pjm.py --start {{start}} --end {{end}} {{ if regions == "" { "" } else { "--regions " + regions } }}
+
+# Verbose download (prints each API URL — useful for debugging 0-row responses)
+download-verbose regions="COMED":
+    uv run download_pjm.py --regions {{regions}} -v
+
+# List available region names and their zone-code mapping
 list-regions:
     uv run download_pjm.py --list-regions
 
