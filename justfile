@@ -98,7 +98,7 @@ check: lint typecheck
 
 # Pack repo into a single file for AI context
 repomix:
-    uv run repomix --ignore "data/,mlruns/,mlartifacts/,results/,.venv/,**/__pycache__,uv.lock,justfile" --output repomix-output.md
+    uv run repomix --ignore "data/,mlruns/,mlartifacts/,results/,.venv/,**/__pycache__,uv.lock,justfile,scripts/" --output repomix-output.md
 
 # Pack and copy to clipboard (xclip on Linux, pbcopy on Mac)
 repomix-clip:
