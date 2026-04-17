@@ -49,3 +49,4 @@ docs/project/shared/fig/*.pdf
 **.lot
 **.log
 **.aux
+.env
