@@ -1,7 +1,7 @@
 # forecast-energy-demand
 
 TCC (undergraduate thesis) — UFRJ / Escola Politécnica
-Author: Matheus Hoffmann Fernandes Santos (hoffmann@poli.ufrj.br)
+Author: Matheus Hoffmann Fernandes Santos (hoffmann[at] poli.ufrj.br)
 Advisor: Claudio Miceli de Farias, Dr.
 
 ## What this project does
